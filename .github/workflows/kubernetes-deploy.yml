@@ -1,0 +1,23 @@
+name: Kubernetes Deploy
+on:
+    push:
+        branches:
+            - kubernetes-deploy
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Checkout do código
+
+            - name: Configuração do GCloud CLI
+            - uses: google-github-actions/auth@v0
+              with:
+                credentials: ${{ secrets.GCP_CREDENTIALS }}
+
+            - name: Configure gcloud
+              run: gcloud components install kubectl
+
+            - name: Deploy
+              run: |
+              kubectl apply -f kubernetes-dploy.yaml
